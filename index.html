@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TIRZZ BUG WHATSAPP</title>
+    <link rel="stylesheet" href="ajax_libs_font-awesome_6.0.0_css_all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00ff88; /* Neon Green */
+            --secondary: #00f3ff; /* Neon Cyan */
+            --bg-dark: #050810;
+            --glass: rgba(10, 16, 26, 0.75);
+            --glass-border: rgba(0, 243, 255, 0.2);
+            --text-main: #ffffff;
+            --text-muted: #8b9eb0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Rajdhani', 'Segoe UI', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            position: relative;
+            overflow: hidden;
+            background-color: var(--bg-dark);
+        }
+
+        /* BACKGROUND GAMBAR FULL LAYAR DENGAN OVERLAY */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://files.catbox.moe/golek6.jpg');
+            background-size: cover;
+            background-position: center;
+            filter: blur(5px) brightness(0.3) contrast(1.2);
+            z-index: -2;
+            transform: scale(1.05);
+        }
+
+        body::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, transparent 0%, #050810 90%);
+            z-index: -1;
+        }
+
+        /* CONTAINER UTAMA */
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background: var(--glass);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(0, 255, 136, 0.1),
+                0 0 30px rgba(0, 255, 136, 0.1);
+            position: relative;
+            z-index: 1;
+            border: 1px solid var(--glass-border);
+        }
+
+        /* HEADER */
+        .header {
+            padding: 24px 20px 16px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .shield-icon {
+            width: 38px; height: 38px;
+            background: rgba(0, 255, 136, 0.1);
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--primary);
+            font-size: 18px;
+            border: 1px solid var(--primary);
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.3) inset;
+        }
+
+        .header-left h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            font-weight: 900;
+            color: var(--text-main);
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+        }
+
+        .header-right {
+            color: var(--secondary);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            background: rgba(0, 243, 255, 0.1);
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--secondary);
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
+        }
+
+        .header-sub {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-sub .left {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .header-sub .left .tirzz {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 15px;
+            letter-spacing: 1px;
+        }
+
+        .header-sub .left .fullup {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .header-sub .right {
+            color: var(--primary);
+            font-size: 18px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.1); }
+        }
+
+        /* MENU SWIPE */
+        .menu-swipe {
+            display: flex;
+            padding: 16px 20px;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .menu-item {
+            flex: 1;
+            text-align: center;
+            padding: 12px 8px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .menu-item i { transition: color 0.3s; }
+        
+        .menu-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .menu-item.active {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 243, 255, 0.1));
+            border-color: var(--primary);
+            color: var(--text-main);
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.2);
+        }
+
+        .menu-item.active i {
+            color: var(--primary);
+        }
+
+        /* VIDEO SECTION */
+        .image-section {
+            padding: 16px 20px;
+        }
+
+        .tirzz-video {
+            width: 100%;
+            height: 160px;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            background: #000;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .tirzz-video::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            box-shadow: inset 0 0 20px rgba(0, 243, 255, 0.3);
+            pointer-events: none;
+        }
+
+        .tirzz-video video {
+            width: 100%; height: 100%;
+            object-fit: cover;
+        }
+
+        .video-overlay {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            padding: 20px 10px 12px 10px;
+            text-align: center;
+        }
+
+        .video-overlay span {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--secondary);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px var(--secondary);
+        }
+
+        /* STATS CARDS */
+        .stats-grid {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 0 20px;
+        }
+
+        .stat-card {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 12px 8px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: var(--primary);
+            background: rgba(0, 255, 136, 0.05);
+        }
+
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 4px;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.4);
+        }
+
+        .stat-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* INPUT SECTION */
+        .input-section {
+            padding: 0 20px 20px 20px;
+        }
+
+        .input-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--secondary);
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            color: var(--text-main);
+            font-size: 15px;
+            margin-bottom: 24px;
+            outline: none;
+            transition: all 0.3s;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+        }
+
+        .input-field:focus {
+            border-color: var(--secondary);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+            background: rgba(0, 243, 255, 0.05);
+        }
+
+        .input-field::placeholder {
+            color: #556677;
+        }
+
+        /* BUG LABEL */
+        .bug-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--secondary);
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        /* BUG GRID */
+        .bug-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .bug-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 10px 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex: 1 1 calc(33.333% - 8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .bug-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .bug-item.active {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.15), rgba(0, 243, 255, 0.15));
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.15);
+        }
+
+        .bug-item i {
+            color: var(--text-muted);
+            font-size: 12px;
+            transition: color 0.2s;
+        }
+
+        .bug-item span {
+            font-size: 11px;
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .bug-item.active i {
+            color: var(--primary);
+        }
+
+        /* BOTTOM SELECTOR */
+        .bottom-selector {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            border-radius: 14px;
+            padding: 14px 16px;
+            margin-bottom: 24px;
+        }
+
+        .selector-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .selector-left i {
+            color: var(--secondary);
+        }
+
+        .selector-left span {
+            color: var(--text-main);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .selector-right {
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 700;
+            background: rgba(0, 255, 136, 0.1);
+            padding: 4px 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        /* SEND BUTTON */
+        .send-btn {
+            width: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 16px;
+            padding: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 10px 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .send-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: 0.5s;
+        }
+
+        .send-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px rgba(0, 255, 136, 0.4);
+        }
+
+        .send-btn:hover::before {
+            left: 100%;
+        }
+
+        .send-btn i, .send-btn span {
+            color: #000;
+            font-size: 16px;
+            font-weight: 900;
+            position: relative;
+            z-index: 1;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        /* FOOTER */
+        .footer {
+            padding: 16px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-left i {
+            color: var(--primary);
+        }
+
+        .footer-left span {
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .footer-right {
+            color: #445566;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        /* CUSTOM ALERT */
+        .custom-alert {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background: rgba(5, 8, 16, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--primary);
+            border-radius: 24px;
+            padding: 30px 24px;
+            width: 90%;
+            max-width: 320px;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+            box-shadow: 0 0 40px rgba(0, 255, 136, 0.2);
+        }
+
+        .custom-alert.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .alert-header {
+            margin-bottom: 24px;
+        }
+
+        .alert-header i {
+            color: var(--primary);
+            font-size: 36px;
+            margin-bottom: 12px;
+            animation: pulse 1.5s infinite;
+        }
+
+        .alert-header h3 {
+            color: var(--primary);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        .alert-content {
+            color: var(--text-main);
+            margin-bottom: 24px;
+        }
+
+        .alert-content div {
+            margin: 10px 0;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .alert-content div > div:first-child {
+            color: var(--text-muted) !important;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .alert-target {
+            color: #ff3366;
+            font-weight: 700;
+            font-size: 14px;
+            word-break: break-all;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        .alert-bug {
+            color: var(--secondary);
+            font-weight: 700;
+            font-size: 15px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .alert-status {
+            color: #ffaa00;
+            font-weight: 700;
+            font-size: 15px;
+            transition: color 0.3s;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .alert-status.success {
+            color: var(--primary);
+            text-shadow: 0 0 15px rgba(0,255,136,0.6);
+        }
+
+        .alert-footer button {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: #000;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+        }
+
+        .alert-footer button:hover {
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+            transform: scale(1.02);
+        }
+
+        #overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
+            z-index: 1999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        #overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-top">
+                <div class="header-left">
+                    <div class="shield-icon">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <h1 id="mainTitle">TIRZZ BUG WHATSAPP</h1>
+                </div>
+                <div class="header-right">2.0</div>
+            </div>
+            <div class="header-sub">
+                <div class="left">
+                    <span class="tirzz">TIRZZ</span>
+                    <span class="fullup">• FULLUP</span>
+                </div>
+                <div class="right">
+                    ⚡
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Swipe -->
+        <div class="menu-swipe">
+            <div class="menu-item active" onclick="switchMenu('whatsapp')" id="menuWhatsapp">
+                <i class="fab fa-whatsapp"></i> BUG WA
+            </div>
+            <div class="menu-item" onclick="switchMenu('group')" id="menuGroup">
+                <i class="fas fa-users"></i> BUG GROUP
+            </div>
+        </div>
+
+        <!-- Video Section -->
+        <div class="image-section">
+            <div class="tirzz-video">
+                <video autoplay loop muted playsinline id="bgVideo">
+                    <source src="https://files.catbox.moe/hbvqqc.mp4" type="video/mp4">
+                    <img src="https://files.catbox.moe/uk7d9e.jpg" alt="fallback">
+                </video>
+                <div class="video-overlay">
+                    <span id="videoText">⚡ TIRZZ MODE ⚡</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value">11</div>
+                <div class="stat-label">TOTAL BUGS</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">GACOR</div>
+                <div class="stat-label">SUCCESS RATE</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">ACTIVE</div>
+                <div class="stat-label">SYSTEM</div>
+            </div>
+        </div>
+
+        <!-- Input Section -->
+        <div class="input-section">
+            <!-- Label Target -->
+            <div class="input-label" id="targetLabel">
+                <i class="fas fa-crosshairs"></i>
+                <span id="targetLabelText">NOMOR TARGET</span>
+            </div>
+            <input type="text" class="input-field" id="targetInput" placeholder="628XXXXXXXXXX" autocomplete="off">
+
+            <!-- Bug Label -->
+            <div class="bug-label">
+                <i class="fas fa-bug"></i>
+                <span>PILIH METODE BUG</span>
+            </div>
+
+            <!-- Bug Grid untuk WhatsApp -->
+            <div class="bug-grid" id="bugGridWhatsapp">
+                <div class="bug-item active" onclick="selectBug(this, 'X-Crashing', 'whatsapp')">
+                    <i class="fas fa-bolt"></i>
+                    <span>X-Crashing</span>
+                </div>
+                <div class="bug-item" onclick="selectBug(this, 'X-Tirzz', 'whatsapp')">
+                    <i class="fas fa-eye"></i>
+                    <span>X-Tirzz</span>
+                </div>
+                <div class="bug-item" onclick="selectBug(this, 'FC DELAYING', 'whatsapp')">
+                    <i class="fas fa-clock"></i>
+                    <span>FC DELAYING</span>
+                </div>
+                <div class="bug-item" onclick="selectBug(this, 'SPAM_CALL', 'whatsapp')">
+                    <i class="fas fa-phone-alt"></i>
+                    <span>SPAM_CALL</span>
+                </div>
+                <div class="bug-item" onclick="selectBug(this, 'UI_DELETE', 'whatsapp')">
+                    <i class="fas fa-trash-alt"></i>
+                    <span>UI_DELETE</span>
+                </div>
+            </div>
+
+            <!-- Bug Grid untuk Group -->
+            <div class="bug-grid" id="bugGridGroup" style="display: none;">
+                <div class="bug-item active" onclick="selectBug(this, 'gc_bug', 'group')">
+                    <i class="fas fa-users"></i>
+                    <span>gc_bug</span>
+                </div>
+                <div class="bug-item" onclick="selectBug(this, 'bugallmem', 'group')">
+                    <i class="fas fa-user-friends"></i>
+                    <span>bugallmem</span>
+                </div>
+                <div class="bug-item" onclick="selectBug(this, 'buggcganas', 'group')">
+                    <i class="fas fa-fire"></i>
+                    <span>buggcganas</span>
+                </div>
+            </div>
+
+            <!-- Bottom Selector -->
+            <div class="bottom-selector">
+                <div class="selector-left">
+                    <i class="fas fa-eye-slash"></i>
+                    <span id="bottomSelectorText">FC iNVisiBiE</span>
+                </div>
+                <div class="selector-right" id="bottomSelectorRight">invisible</div>
+            </div>
+
+            <!-- Send Button -->
+            <div class="send-btn" onclick="validateAndSend()">
+                <i class="fas fa-paper-plane"></i>
+                <span>KIRIM BUG</span>
+                <i class="fas fa-bolt"></i>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-left">
+                <i class="fas fa-code"></i>
+                <span>TIRZZ TEAM</span>
+            </div>
+            <div class="footer-right">
+                © 2026 TIRZZ. All Rights Reserved.
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Alert -->
+    <div class="custom-alert" id="customAlert">
+        <div class="alert-header">
+            <i class="fas fa-satellite-dish"></i>
+            <h3>PROSES TIRZZ...</h3>
+        </div>
+        <div class="alert-content">
+            <div>
+                <div id="alertTargetLabel">TARGET:</div>
+                <div class="alert-target" id="alertTarget"></div>
+            </div>
+            <div>
+                <div>BUG TYPE:</div>
+                <div class="alert-bug" id="alertBug"></div>
+            </div>
+            <div>
+                <div>STATUS:</div>
+                <div class="alert-status" id="alertStatus">PROCESSING...</div>
+            </div>
+        </div>
+        <div class="alert-footer">
+            <button class="alert-btn" onclick="closeAlert()">GASS</button>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div id="overlay" onclick="closeAlert()"></div>
+
+    <script>
+        let alertTimeout;
+        let currentMode = 'whatsapp'; 
+        let currentBug = 'X-Crashing';
+        let currentGroupBug = 'gc_bug';
+
+        function switchMenu(mode) {
+            currentMode = mode;
+            
+            document.getElementById('menuWhatsapp').classList.toggle('active', mode === 'whatsapp');
+            document.getElementById('menuGroup').classList.toggle('active', mode === 'group');
+            
+            document.getElementById('mainTitle').textContent = mode === 'whatsapp' ? 'TIRZZ BUG WHATSAPP' : 'TIRZZ BUG GROUP';
+            
+            document.getElementById('targetLabelText').textContent = mode === 'whatsapp' ? 'NOMOR TARGET' : 'GROUP URL TARGET';
+            document.getElementById('targetInput').placeholder = mode === 'whatsapp' ? '628XXXXXXXXXX' : 'https://chat.whatsapp.com/...';
+            
+            document.getElementById('videoText').textContent = mode === 'whatsapp' ? '⚡ TIRZZ MODE ⚡' : '⚡ TIRZZ GROUP MODE ⚡';
+            
+            document.getElementById('bugGridWhatsapp').style.display = mode === 'whatsapp' ? 'flex' : 'none';
+            document.getElementById('bugGridGroup').style.display = mode === 'group' ? 'flex' : 'none';
+            
+            if(mode === 'whatsapp') {
+                updateBottomSelectorWhatsapp(currentBug);
+            } else {
+                updateBottomSelectorGroup(currentGroupBug);
+            }
+        }
+
+        function selectBug(element, bugName, mode) {
+            if(mode === 'whatsapp') {
+                document.querySelectorAll('#bugGridWhatsapp .bug-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                currentBug = bugName;
+            } else {
+                document.querySelectorAll('#bugGridGroup .bug-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                currentGroupBug = bugName;
+            }
+            
+            element.classList.add('active');
+            
+            if(mode === 'whatsapp') {
+                updateBottomSelectorWhatsapp(bugName);
+            } else {
+                updateBottomSelectorGroup(bugName);
+            }
+        }
+
+        function updateBottomSelectorWhatsapp(bugName) {
+            const bottomText = document.getElementById('bottomSelectorText');
+            const bottomRight = document.getElementById('bottomSelectorRight');
+            
+            switch(bugName) {
+                case 'X-Crashing':
+                    bottomText.textContent = 'FC iNVisiBiE';
+                    bottomRight.textContent = 'invisible';
+                    break;
+                case 'X-Tirzz':
+                    bottomText.textContent = 'X-Tirzz Mode';
+                    bottomRight.textContent = 'fcotax';
+                    break;
+                case 'FC DELAYING':
+                    bottomText.textContent = 'DELAY iNVisiBiE';
+                    bottomRight.textContent = 'DELAY';
+                    break;
+                case 'SPAM_CALL':
+                    bottomText.textContent = 'SPAM CALL';
+                    bottomRight.textContent = 'spam';
+                    break;
+                case 'UI_DELETE':
+                    bottomText.textContent = 'UI DELETE';
+                    bottomRight.textContent = 'delete';
+                    break;
+            }
+        }
+
+        function updateBottomSelectorGroup(bugName) {
+            const bottomText = document.getElementById('bottomSelectorText');
+            const bottomRight = document.getElementById('bottomSelectorRight');
+            
+            switch(bugName) {
+                case 'gc_bug':
+                    bottomText.textContent = 'GC BUG MODE';
+                    bottomRight.textContent = 'gc';
+                    break;
+                case 'bugallmem':
+                    bottomText.textContent = 'ALL MEMBER BUG';
+                    bottomRight.textContent = 'all';
+                    break;
+                case 'buggcganas':
+                    bottomText.textContent = 'GC GANAS MODE';
+                    bottomRight.textContent = 'ganas';
+                    break;
+            }
+        }
+
+        function validateAndSend() {
+            const target = document.getElementById('targetInput').value.trim();
+            
+            if(currentMode === 'whatsapp') {
+                if(!target) {
+                    alert('ISI NOMOR DULU BEGO!');
+                    return;
+                }
+                if(!target.startsWith('628')) {
+                    alert('INI BUKAN NOMOR BEGO TOLOL!');
+                    return;
+                }
+                if(target.length < 10 || target.length > 13) {
+                    alert('NOMOR GA VALID BEGO!');
+                    return;
+                }
+            } else {
+                if(!target) {
+                    alert('ISI URL GROUP DULU BEGO!');
+                    return;
+                }
+                if(!target.startsWith('https://')) {
+                    alert('URL HARUS DIAWALI https:// BEGO!');
+                    return;
+                }
+                if(!target.includes('chat.whatsapp.com')) {
+                    alert('INI BUKAN LINK GROUP WA BEGO!');
+                    return;
+                }
+            }
+            
+            document.getElementById('alertTargetLabel').textContent = currentMode === 'whatsapp' ? 'TARGET:' : 'GROUP URL:';
+            document.getElementById('alertTarget').textContent = target;
+            document.getElementById('alertBug').textContent = currentMode === 'whatsapp' ? currentBug : currentGroupBug;
+            document.getElementById('alertStatus').textContent = 'PROCESSING...';
+            document.getElementById('alertStatus').className = 'alert-status';
+            
+            document.getElementById('customAlert').classList.add('show');
+            document.getElementById('overlay').classList.add('show');
+            
+            if(alertTimeout) clearTimeout(alertTimeout);
+            
+            alertTimeout = setTimeout(() => {
+                document.getElementById('alertStatus').textContent = 'SUCCESSFULLY';
+                document.getElementById('alertStatus').className = 'alert-status success';
+            }, 5000);
+        }
+
+        function closeAlert() {
+            document.getElementById('customAlert').classList.remove('show');
+            document.getElementById('overlay').classList.remove('show');
+            if(alertTimeout) clearTimeout(alertTimeout);
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if(e.key === 'Escape') closeAlert();
+        });
+    </script>
+</body>
+</html>
